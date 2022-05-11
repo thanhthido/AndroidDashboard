@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidDashboard</string>
+    <string name="bottom_home">Home</string>
+    <string name="bottom_history">History</string>
+    <string name="bottom_wifi">WIFI</string>
+    <string name="CO_fake_value">0.45 µg/m<sup>3</sup></string>
+    <string name="no2_title">Nồng độ khí NO<sub>2</sub></string>
+    <string name="ch4_title">Nồng độ khí CH<sub>4</sub></string>
 </resources>

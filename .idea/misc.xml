@@ -3,7 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_black_rose.xml" value="0.179" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_blue_raspberry.xml" value="0.179" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_green_blue.xml" value="0.231" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_mojito.xml" value="0.179" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_sweet_morning.xml" value="0.2" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_history.xml" value="0.1255" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_home.xml" value="0.1255" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_temp.xml" value="0.2325" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_wifi.xml" value="0.1255" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_history.xml" value="0.176" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_wifi.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/menu/bottom_menu.xml" value="0.22083333333333333" />
       </map>
     </option>
   </component>

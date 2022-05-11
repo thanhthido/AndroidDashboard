@@ -1,4 +1,4 @@
-package com.thanhthido.androiddashboard.pages.home_page
+package com.thanhthido.androiddashboard.pages.history_page
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HistoryViewModel @Inject constructor(
     private val repository: DashboardRepository
 ) : ViewModel() {
 

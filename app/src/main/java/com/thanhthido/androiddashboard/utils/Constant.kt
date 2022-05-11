@@ -2,7 +2,7 @@ package com.thanhthido.androiddashboard.utils
 
 object Constant {
 
-    const val BASE_URL = "http://192.168.1.18:8001"
+    const val BASE_URL = "http://192.168.1.10:8001"
     const val PATH_GET_ALL_SENSOR_DATA = "/sensorsData"
     const val PATH_GET_SENSOR_DATA_BASED_ON_TYPE = "/sensorsData/data"
 
