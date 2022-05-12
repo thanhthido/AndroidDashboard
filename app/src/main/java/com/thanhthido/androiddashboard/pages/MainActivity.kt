@@ -1,21 +1,27 @@
 package com.thanhthido.androiddashboard.pages
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.thanhthido.androiddashboard.R
 import com.thanhthido.androiddashboard.databinding.ActivityMainBinding
-import com.thanhthido.androiddashboard.pages.history_page.HistoryViewModel
-import com.thanhthido.androiddashboard.utils.NetworkStatus
+import com.thanhthido.androiddashboard.service.DashboardService
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
+
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val dashboardService by lazy {
+        Intent(this, DashboardService::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +29,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpBottomNavigation()
+        startDashboardService()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopDashBoardService()
+    }
+
+    private fun startDashboardService() {
+        val isDashboardServiceRunning = isServiceRunning(dashboardService::class.java)
+        if (isDashboardServiceRunning) return
+        ContextCompat.startForegroundService(this, dashboardService)
+    }
+
+    private fun stopDashBoardService() {
+        stopService(dashboardService)
+    }
+
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        manager.getRunningServices(Integer.MAX_VALUE).forEach { service ->
+            if (serviceClass.name.equals(service.service.className)) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun setUpBottomNavigation() {

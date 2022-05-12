@@ -104,4 +104,14 @@ dependencies {
 
     // Shimmer effect
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // mqtt
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.4'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+
+    // eventbus
+    implementation "org.greenrobot:eventbus:3.3.1"
+
 }

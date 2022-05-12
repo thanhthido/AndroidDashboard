@@ -140,7 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="8dp"
-                            android:text="36.0 \u2103"
+                            android:text="0.00 \u2103"
                             android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold"
