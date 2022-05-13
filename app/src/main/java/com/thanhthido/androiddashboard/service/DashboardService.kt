@@ -1,10 +1,11 @@
 package com.thanhthido.androiddashboard.service
 
-import android.app.Service
 import android.content.Intent
-import android.os.IBinder
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.thanhthido.androiddashboard.data.mqtt_response.SensorData
+import com.thanhthido.androiddashboard.di.dispatchers.DispatcherProvider
 import com.thanhthido.androiddashboard.events.MQTTEvents
 import com.thanhthido.androiddashboard.events.MqttConnectionStatusEvent
 import com.thanhthido.androiddashboard.mqtt.MqttHelper
@@ -13,7 +14,8 @@ import com.thanhthido.androiddashboard.mqtt.MqttHelper.MQTT_URL
 import com.thanhthido.androiddashboard.mqtt.MqttHelper.MQTT_USERNAME
 import com.thanhthido.androiddashboard.mqtt.MqttTopic
 import com.thanhthido.androiddashboard.utils.NotificationUtils.initNotification
-import kotlinx.coroutines.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
@@ -21,16 +23,17 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.random.Random
 
-class DashboardService : Service() {
+@AndroidEntryPoint
+class DashboardService : LifecycleService() {
 
-
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.Default + job)
+    @Inject
+    lateinit var dispatcherProvider: DispatcherProvider
 
     private val mqttClient: MqttAndroidClient by lazy {
-        MqttAndroidClient(this, MQTT_URL, "${Random.nextInt()}123456")
+        MqttAndroidClient(this, MQTT_URL, "${Random.nextInt()}123456hdasjkdh")
     }
 
     private val mqttOptions: MqttConnectOptions by lazy {
@@ -46,19 +49,16 @@ class DashboardService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        lifecycleScope.launch(dispatcherProvider.default) {
+            MqttHelper.connect(mqttClient, mqttOptions).collect { mqttState ->
+                EventBus.getDefault().post(MqttConnectionStatusEvent(mqttState))
 
-        scope.launch {
-            val connectStatus = async {
-                MqttHelper.connect(mqttClient, mqttOptions)
-            }
-            withContext(Dispatchers.Main) {
-                EventBus.getDefault().post(MqttConnectionStatusEvent(connectStatus.await()!!))
             }
         }
 
         mqttClient.setCallback(object : MqttCallback {
             override fun messageArrived(topic: String, message: MqttMessage) {
-                if (topic != MqttTopic.Sensors().topic) return
+                if (topic != MqttTopic.SENSOR_DATA.topicName) return
                 val response = Gson().fromJson(message.toString(), SensorData::class.java)
                 EventBus.getDefault().post(MQTTEvents(response))
             }
@@ -76,13 +76,10 @@ class DashboardService : Service() {
         return START_NOT_STICKY
     }
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
+        mqttClient.unregisterResources()
+        mqttClient.close()
     }
 
 

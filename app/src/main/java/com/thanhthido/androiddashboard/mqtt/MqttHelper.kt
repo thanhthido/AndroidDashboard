@@ -1,13 +1,11 @@
 package com.thanhthido.androiddashboard.mqtt
 
 import com.thanhthido.androiddashboard.utils.MqttConnectState
-import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.eclipse.paho.android.service.MqttAndroidClient
-import org.eclipse.paho.client.mqttv3.IMqttActionListener
-import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
-import timber.log.Timber
 
 object MqttHelper {
 
@@ -16,61 +14,30 @@ object MqttHelper {
     const val MQTT_USERNAME = "burlgbdf"
     const val MQTT_PASSWORD = "0--UiYtSUWAZ"
 
-    suspend fun connect(mqttClient: MqttAndroidClient, options: MqttConnectOptions) =
-        withContext(Dispatchers.Default) {
-            MqttConnectState.loading<Unit>()
+    suspend fun connect(
+        mqttClient: MqttAndroidClient,
+        options: MqttConnectOptions
+    ): Flow<MqttConnectState<Unit>> =
+        flow {
+            emit(MqttConnectState.loading())
             try {
-                var mqttConnectStatus: MqttConnectState<Unit>? = null
-                val connecting = async {
-                    mqttClient.connect(options, null, null)
+                if (mqttClient.isConnected) {
+                    emit(MqttConnectState.error(""))
+                    return@flow
                 }
-
-                val a = async {
-                    connecting.await().actionCallback
+                mqttClient.apply {
+                    connect(options, null, null).waitForCompletion()
+                    subscribe(MqttTopic.SENSOR_DATA.topicName, 0, null, null).waitForCompletion()
                 }
-
-//                a.await().onSuccess()
-
-                mqttConnectStatus
+                emit(MqttConnectState.connected())
             } catch (e: MqttException) {
                 e.printStackTrace()
-                MqttConnectState.error(e.message)
+                emit(MqttConnectState.error(e.message))
             }
         }
-
-    private suspend fun subscribe(
-        mqttClient: MqttAndroidClient,
-        mqttTopic: MqttTopic,
-        qos: Int = 0
-    ): Pair<Boolean, String>? {
-        var isSubscribe: Pair<Boolean, String>? = null
-        try {
-            withContext(Dispatchers.Main) {
-                val subscribing = async {
-                    mqttClient.subscribe(mqttTopic.topic, qos, null, null)
-                }
-                subscribing.await().actionCallback = object : IMqttActionListener {
-                    override fun onSuccess(asyncActionToken: IMqttToken?) {
-                        Timber.d("Subscribe thanh cong")
-                        isSubscribe = Pair(true, "")
-                    }
-
-                    override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                        Timber.e("Subscribe that bai")
-                        isSubscribe = Pair(false, exception?.message ?: "khong the subscibe")
-                    }
-                }
-            }
-        } catch (e: MqttException) {
-            e.printStackTrace()
-            isSubscribe = Pair(false, e.message ?: "khong the subscibe")
-        }
-        return isSubscribe
-    }
-
 }
 
-sealed class MqttTopic(val topic: String) {
-    class Sensors(topic: String = "nodeWiFi32/detail") : MqttTopic(topic)
+enum class MqttTopic(val topicName: String) {
+    SENSOR_DATA(topicName = "nodeWiFi32/detail")
 }
 

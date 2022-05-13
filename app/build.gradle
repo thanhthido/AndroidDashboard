@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.thanhthido.androiddashboard"
         minSdk 22
-        targetSdk 32
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
@@ -107,11 +107,15 @@ dependencies {
 
     // mqtt
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.4'
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
 
     // eventbus
     implementation "org.greenrobot:eventbus:3.3.1"
+
+    // Paging 3
+    implementation "androidx.paging:paging-common-ktx:3.0.0-alpha05"
+    implementation "androidx.paging:paging-runtime:3.0.0-alpha05"
 
 }

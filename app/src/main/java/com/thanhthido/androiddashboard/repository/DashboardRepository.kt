@@ -1,39 +1,32 @@
 package com.thanhthido.androiddashboard.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.thanhthido.androiddashboard.data.remote.UrlsApi
-import com.thanhthido.androiddashboard.di.dispatchers.DispatcherProvider
-import com.thanhthido.androiddashboard.utils.NetworkResult
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DashboardRepository @Inject constructor(
-    private val urlsApi: UrlsApi,
-    private val dispatchers: DispatcherProvider
+    private val api: UrlsApi
 ) {
 
-    suspend fun getAllSensorData(
-        page: Int = 1,
-        limit: Int = 10
-    ) = withContext(dispatchers.io) {
-        try {
-            val response = urlsApi.getAllSensorData(page, limit)
-            NetworkResult.success(response)
-        } catch (e: Exception) {
-            NetworkResult.error(e.message, null)
-        }
+    companion object {
+        const val NETWORK_PAGE_SIZE = 21
     }
 
-    suspend fun getSensorDataBasedOnType(
-        type: String = "temperature",
-        page: Int = 1,
-        limit: Int = 10
-    ) = withContext(dispatchers.io) {
-        try {
-            val response = urlsApi.getSensorDataBasedOnType(type, page, limit)
-            NetworkResult.success(response)
-        } catch (e: Exception) {
-            NetworkResult.error(e.message, null)
+    fun getSearchSensorData(
+        query: String = "all"
+    ) = Pager(
+        config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = {
+            SensorDataPagingSource(
+                api,
+                query
+            )
         }
-    }
+    ).liveData
 
 }

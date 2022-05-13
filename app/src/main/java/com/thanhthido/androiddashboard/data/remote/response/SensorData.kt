@@ -9,7 +9,7 @@ data class SensorData(
     @SerializedName("_id")
     val id: String = "",
     @SerializedName("time")
-    val time: String = "",
+    val time: Long = 0,
     @SerializedName("type")
     val type: String = "",
     @SerializedName("value")

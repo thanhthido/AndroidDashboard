@@ -1,20 +1,27 @@
 package com.thanhthido.androiddashboard.pages.home_page
 
+import android.app.ProgressDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.thanhthido.androiddashboard.R
+import android.widget.Toast
 import com.thanhthido.androiddashboard.base.BaseFragment
 import com.thanhthido.androiddashboard.databinding.FragmentHomeBinding
 import com.thanhthido.androiddashboard.events.MQTTEvents
 import com.thanhthido.androiddashboard.events.MqttConnectionStatusEvent
-import com.thanhthido.androiddashboard.utils.MqttConnectStatus
+import com.thanhthido.androiddashboard.utils.MqttConnectStatus.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
+@Suppress("DEPRECATION", "UNUSED", "SetTextI18n")
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    private val progressDialog by lazy {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Loading")
+        progressDialog
+    }
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -40,27 +47,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         if (type.equals("co", ignoreCase = true)) {
-            binding.tvCoValue.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvCoValue.text = "$value"
         }
 
         if (type.equals("no2", ignoreCase = true)) {
-            binding.tvNo2Value.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvNo2Value.text = "$value"
         }
 
         if (type.equals("ch4", ignoreCase = true)) {
-            binding.tvCh4Value.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvCh4Value.text = "$value"
         }
 
         if (type.equals("pm1", ignoreCase = true)) {
-            binding.tvPm1Value.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvPm1Value.text = "$value"
         }
 
         if (type.equals("pm25", ignoreCase = true)) {
-            binding.tvPm25Value.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvPm25Value.text = "$value"
         }
 
         if (type.equals("pm10", ignoreCase = true)) {
-            binding.tvPm10Value.text = "$value µg/m${requireContext().getString(R.string.unit_sup)}"
+            binding.tvPm10Value.text = "$value"
         }
 
     }
@@ -68,14 +75,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun receiveMqttConnectionState(mqttConnectionStatusEvent: MqttConnectionStatusEvent) {
         when (mqttConnectionStatusEvent.status.mqttConnectStatus) {
-            MqttConnectStatus.CONNECTING -> {
-                Log.d("MqttStatus", "loading")
+            CONNECTING -> {
+                progressDialog.show()
             }
-            MqttConnectStatus.CONNECTED -> {
-                Log.d("MqttStatus", "connected")
+            CONNECTED -> {
+                progressDialog.dismiss()
+                Toast.makeText(
+                    requireContext(),
+                    "Kết nối với mqtt broker thành công",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            MqttConnectStatus.ERROR -> {
-                Log.d("MqttStatus", "error")
+            ERROR -> {
+                progressDialog.dismiss()
+                val msg = mqttConnectionStatusEvent.status.message
+                msg?.let { message ->
+                    if (message.isEmpty()) return@let
+                    Toast.makeText(
+                        requireContext(),
+                        message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
     }

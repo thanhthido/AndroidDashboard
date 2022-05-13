@@ -11,4 +11,17 @@
     <color name="blue_300_primary">#64b5f6</color>
     <color name="blue_300_light">#9be7ff</color>
     <color name="blue_300_dark">#2286c3</color>
+    <color name="color_event_normal_text">#166534</color>
+    <color name="color_bg_event_normal">#BBF7D0</color>
+    <color name="bg_card_normal">#F0FDF4</color>
+    <color name="color_event_error_text">#991b1b</color>
+    <color name="color_bg_event_error">#fecaca</color>
+    <color name="bg_card_error">#fef2f2</color>
+
+    <color name="color_temp">#FF5F6D</color>
+    <color name="color_co">#0083B0</color>
+    <color name="color_no2">#11998e</color>
+    <color name="color_ch4">#BB377D</color>
+    <color name="color_dust">#649173</color>
+
 </resources>

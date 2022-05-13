@@ -1,31 +1,29 @@
 package com.thanhthido.androiddashboard.pages.history_page
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.thanhthido.androiddashboard.data.remote.response.SensorDataListResponse
+import androidx.paging.cachedIn
 import com.thanhthido.androiddashboard.repository.DashboardRepository
-import com.thanhthido.androiddashboard.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val repository: DashboardRepository
+    private val repository: DashboardRepository,
+    state: SavedStateHandle
 ) : ViewModel() {
 
-    private var _sensorDataResponse: MutableLiveData<NetworkResult<SensorDataListResponse>> =
-        MutableLiveData()
-    val sensorDataResponse: LiveData<NetworkResult<SensorDataListResponse>> = _sensorDataResponse
+    companion object {
+        private const val CURRENT_QUERY = "current_query"
+        private const val DEFAULT_QUERY = "all"
+    }
 
-    fun getAllSensorData(
-        page: Int = 1,
-        limit: Int = 10
-    ) = viewModelScope.launch {
-        val response = repository.getAllSensorData(page, limit)
-        _sensorDataResponse.postValue(response)
+    private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
+    val sensorDataResponse = currentQuery.switchMap { queryString ->
+        repository.getSearchSensorData(queryString)
+            .cachedIn(viewModelScope)
     }
 
 }

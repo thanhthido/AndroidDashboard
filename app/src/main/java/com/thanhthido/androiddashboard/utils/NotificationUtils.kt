@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.renderscript.RenderScript
 import androidx.core.app.NotificationCompat
 import com.thanhthido.androiddashboard.R
 import com.thanhthido.androiddashboard.pages.MainActivity
@@ -37,7 +36,7 @@ object NotificationUtils {
     fun initNotification(context: Context, dashboardService: DashboardService): Notification {
         val goBackToAppIntent = Intent(dashboardService, MainActivity::class.java).let { intent ->
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            PendingIntent.getActivity(context, 0, intent, 0)
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         val cancelService = Intent(dashboardService, BroadcastHandler::class.java).let { intent ->

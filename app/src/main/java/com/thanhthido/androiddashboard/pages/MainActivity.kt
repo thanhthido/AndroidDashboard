@@ -1,7 +1,6 @@
 package com.thanhthido.androiddashboard.pages
 
 import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -32,30 +31,19 @@ class MainActivity : AppCompatActivity() {
         startDashboardService()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        stopDashBoardService()
-    }
-
     private fun startDashboardService() {
-        val isDashboardServiceRunning = isServiceRunning(dashboardService::class.java)
+        val isDashboardServiceRunning = isServiceRunning(".service.DashboardService")
         if (isDashboardServiceRunning) return
         ContextCompat.startForegroundService(this, dashboardService)
     }
 
-    private fun stopDashBoardService() {
-        stopService(dashboardService)
-    }
+    private fun isServiceRunning(serviceClassName: String): Boolean {
+        val activityManager =
+            ContextCompat.getSystemService(this, ActivityManager::class.java) ?: return false
 
-    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        manager.getRunningServices(Integer.MAX_VALUE).forEach { service ->
-            if (serviceClass.name.equals(service.service.className)) {
-                return true
-            }
+        return activityManager.getRunningServices(Int.MAX_VALUE).any { serviceInfo ->
+            serviceInfo.service.shortClassName == serviceClassName
         }
-        return false
     }
 
     private fun setUpBottomNavigation() {

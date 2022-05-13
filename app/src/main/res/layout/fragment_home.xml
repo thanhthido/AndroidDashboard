@@ -108,8 +108,8 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <LinearLayout
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     android:gravity="center">
 
                                     <ImageView
@@ -139,10 +139,9 @@
                             android:id="@+id/tv_temp_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
                             android:text="0.00 \u2103"
                             android:textColor="@color/white"
-                            android:textSize="28sp"
+                            android:textSize="@dimen/dimen_value"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -188,8 +187,8 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <LinearLayout
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     android:gravity="center">
 
                                     <ImageView
@@ -205,9 +204,10 @@
 
                         <TextView
                             android:id="@+id/tv_title_co"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:gravity="start"
                             android:text="Nồng độ khí CO"
                             android:textColor="@color/white"
                             android:textSize="18sp"
@@ -219,14 +219,30 @@
                             android:id="@+id/tv_co_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
-                            android:text="@string/CO_fake_value"
+                            android:ellipsize="end"
+                            android:gravity="start"
+                            android:maxLines="1"
                             android:textColor="@color/white"
-                            android:textSize="28sp"
+                            android:text="0.00"
+                            android:textSize="@dimen/dimen_value"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_title_co" />
+
+                        <TextView
+                            android:id="@+id/tv_unit_co"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="4dp"
+                            android:text="@string/unit_sup"
+                            android:textColor="@color/white"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_co_value"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_co_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_co_value" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -276,8 +292,8 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <LinearLayout
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     android:gravity="center">
 
                                     <ImageView
@@ -308,14 +324,27 @@
                             android:id="@+id/tv_no2_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
                             android:text="@string/CO_fake_value"
                             android:textColor="@color/white"
-                            android:textSize="28sp"
+                            android:textSize="@dimen/dimen_value"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_title_no2" />
+
+                        <TextView
+                            android:id="@+id/tv_unit_no2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="4dp"
+                            android:text="@string/unit_sup"
+                            android:textColor="@color/white"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_no2_value"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_no2_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_no2_value" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -357,8 +386,8 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <LinearLayout
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     android:gravity="center">
 
                                     <ImageView
@@ -389,14 +418,27 @@
                             android:id="@+id/tv_ch4_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
                             android:text="@string/CO_fake_value"
                             android:textColor="@color/white"
-                            android:textSize="28sp"
+                            android:textSize="@dimen/dimen_value"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_title_ch4" />
+
+                        <TextView
+                            android:id="@+id/tv_unit_ch4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="4dp"
+                            android:text="@string/unit_sup"
+                            android:textColor="@color/white"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_ch4_value"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_ch4_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_ch4_value" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -444,8 +486,8 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:gravity="center">
 
                             <ImageView
@@ -487,14 +529,28 @@
                     android:id="@+id/tv_pm25_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
                     android:text="@string/CO_fake_value"
                     android:textColor="@color/white"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/dimen_value"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/tv_title_pm25"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_title_pm25" />
+                    app:layout_constraintEnd_toStartOf="@id/tv_unit_pm25"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/tv_pm1_value" />
+
+                <TextView
+                    android:id="@+id/tv_unit_pm25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/unit_sup"
+                    android:textColor="@color/white"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_pm25_value"
+                    app:layout_constraintStart_toEndOf="@id/tv_pm25_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_pm25_value" />
 
                 <TextView
                     android:id="@+id/tv_title_pm1"
@@ -512,14 +568,28 @@
                     android:id="@+id/tv_pm1_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
                     android:text="@string/CO_fake_value"
                     android:textColor="@color/white"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/dimen_value"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/tv_title_pm1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_title_pm1" />
+                    app:layout_constraintEnd_toStartOf="@id/tv_unit_pm1"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/tv_pm10_value" />
+
+                <TextView
+                    android:id="@+id/tv_unit_pm1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/unit_sup"
+                    android:textColor="@color/white"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_pm1_value"
+                    app:layout_constraintStart_toEndOf="@id/tv_pm1_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_pm1_value" />
 
                 <TextView
                     android:id="@+id/tv_title_pm10"
@@ -537,14 +607,29 @@
                     android:id="@+id/tv_pm10_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
                     android:text="@string/CO_fake_value"
                     android:textColor="@color/white"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/dimen_value"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/tv_title_pm10"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_unit_pm10"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toEndOf="@id/tv_title_pm10" />
+
+                <TextView
+                    android:id="@+id/tv_unit_pm10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/unit_sup"
+                    android:textColor="@color/white"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_pm10_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_pm10_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_pm10_value" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
