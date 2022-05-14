@@ -17,13 +17,17 @@ class HistoryViewModel @Inject constructor(
 
     companion object {
         private const val CURRENT_QUERY = "current_query"
-        private const val DEFAULT_QUERY = "all"
+        private const val DEFAULT_QUERY = "{\"first\":\"all\",\"second\":\"all\"}"
     }
 
     private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
     val sensorDataResponse = currentQuery.switchMap { queryString ->
         repository.getSearchSensorData(queryString)
             .cachedIn(viewModelScope)
+    }
+
+    fun searchSensorDataBasedOnType(query: String) {
+        currentQuery.value = query
     }
 
 }

@@ -1,6 +1,7 @@
 package com.thanhthido.androiddashboard.repository
 
 import androidx.paging.PagingSource
+import com.google.gson.Gson
 import com.thanhthido.androiddashboard.data.remote.UrlsApi
 import com.thanhthido.androiddashboard.data.remote.response.SensorData
 import com.thanhthido.androiddashboard.repository.DashboardRepository.Companion.NETWORK_PAGE_SIZE
@@ -16,11 +17,18 @@ class SensorDataPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SensorData> {
         val position = params.key ?: STARTING_PAGE_INDEX
 
+        val query = Gson().fromJson<Pair<String, String>>(queryType, Pair::class.java)
+        val (type, event) = query
+
         return try {
-            val response = if (queryType == "all") {
+            val response = if (type == "all" && event == "all") {
                 api.getAllSensorData(position, params.loadSize)
+            } else if (type == "all" && event == "normal") {
+                api.getAllSensorData(position, params.loadSize, "normal")
+            } else if (type == "all" && event == "error") {
+                api.getAllSensorData(position, params.loadSize, "error")
             } else {
-                api.getSensorDataBasedOnType(queryType, position, params.loadSize)
+                api.getSensorDataBasedOnType(type, position, params.loadSize, event)
             }
             val listOfData = response.sensorDataList ?: listOf()
             val nextKey = if (listOfData.isEmpty()) {

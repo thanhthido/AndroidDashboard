@@ -17,14 +17,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history_data"
+    <ImageView
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:contentDescription="@string/icon_filter_content_description"
+        android:focusable="true"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title_history" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_history" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title_history">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/pb_loading"
@@ -52,7 +72,6 @@
         tools:visibility="visible"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/tv_history_fail"
         android:layout_width="wrap_content"
@@ -73,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#0284c7"
+        android:backgroundTint="@color/blue_300_dark"
         android:text="Thử lại"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/tv_history_fail"

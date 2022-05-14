@@ -7,4 +7,22 @@
     <string name="no2_title">Nồng độ khí NO<sub>2</sub></string>
     <string name="ch4_title">Nồng độ khí CH<sub>4</sub></string>
     <string name="unit_sup">µg/m<sup>3</sup></string>
+    <string name="icon_filter_content_description">icon-filter</string>
+
+    <string-array name="history_type">
+        <item>Tất cả thông số</item>
+        <item>Nhiệt độ</item>
+        <item>Nồng độ khí CO</item>
+        <item>Nồng độ khí NO2</item>
+        <item>Nồng độ khí CH4</item>
+        <item>Nồng độ PM2.5</item>
+        <item>Nồng độ PM1.0</item>
+        <item>Nồng độ PM10.0</item>
+    </string-array>
+
+    <string-array name="history_event">
+        <item>Tất cả trạng thái</item>
+        <item>Bình thường</item>
+        <item>Bất thường</item>
+    </string-array>
 </resources>

@@ -13,4 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_300_dark</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="BottomSheetAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
 </resources>

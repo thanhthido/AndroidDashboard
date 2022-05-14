@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Nhiệt độ bình thường"
+            tools:text="Nhiệt độ bình thường"
             android:textColor="#675E5E"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"

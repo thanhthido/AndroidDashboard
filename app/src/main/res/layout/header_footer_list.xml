@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#0284c7"
+        android:backgroundTint="@color/blue_300_dark"
         android:text="Thử lại"
         android:visibility="gone"
         tools:visibility="visible" />

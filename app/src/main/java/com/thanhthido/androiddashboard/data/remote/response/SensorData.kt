@@ -13,5 +13,7 @@ data class SensorData(
     @SerializedName("type")
     val type: String = "",
     @SerializedName("value")
-    val value: Double = 0.0
+    val value: Double = 0.0,
+    @SerializedName("msg")
+    val msg: String = ""
 )

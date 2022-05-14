@@ -14,11 +14,14 @@
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_close.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_cloud.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_dust.xml" value="0.2325" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_filter.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_history.xml" value="0.1255" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_home.xml" value="0.1255" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_temp.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_wifi.xml" value="0.1255" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/bottom_sheet_filter.xml" value="0.264" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/dropdown_item.xml" value="0.264" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_history.xml" value="0.264" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_wifi.xml" value="0.22083333333333333" />

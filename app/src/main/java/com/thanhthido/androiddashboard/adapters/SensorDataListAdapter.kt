@@ -136,6 +136,8 @@ class SensorDataListAdapter :
             val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa", Locale.getDefault())
             binding.tvDate.text = formatter.format(date)
 
+            binding.tvDetails.text = sensorData.msg
+
             when (sensorData.event) {
                 NORMAL_MODE -> {
                     binding.tvEvent.text = "Bình thường"

@@ -15,7 +15,7 @@ class DashboardRepository @Inject constructor(
     }
 
     fun getSearchSensorData(
-        query: String = "all"
+        query: String = "{\"first\":\"all\",\"second\":\"all\"}"
     ) = Pager(
         config = PagingConfig(
             pageSize = NETWORK_PAGE_SIZE,
