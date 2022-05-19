@@ -2,7 +2,6 @@ package com.thanhthido.androiddashboard.pages.history_page
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
@@ -89,7 +88,18 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             filterData()
             bottomSheetDialog.dismiss()
         }
+
         binding.refreshRv.setOnRefreshListener {
+            if (binding.pbLoading.isVisible) {
+                binding.refreshRv.isRefreshing = false
+                return@setOnRefreshListener
+            }
+
+            if (binding.btnRetry.isVisible) {
+                binding.refreshRv.isRefreshing = false
+                return@setOnRefreshListener
+            }
+
             binding.refreshRv.isRefreshing = true
             dataListAdapter.refresh()
         }

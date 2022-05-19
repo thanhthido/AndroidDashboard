@@ -9,5 +9,5 @@ data class SensorData(
     @SerializedName("type")
     val type: String = "",
     @SerializedName("value")
-    val value: Int = 0
+    val value: Double = 0.0
 )

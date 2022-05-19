@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +57,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_details" />
 
+        <TextView
+            android:id="@+id/tv_sub_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_details"
+            tools:text="hh:mm:ss\ndd/MM/yyyy" />
+
         <LinearLayout
             android:id="@+id/container_except_dust"
             android:layout_width="match_parent"
@@ -64,7 +79,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_sub_title">
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_date">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,7 +250,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
-                            android:text="@string/unit_sup"
+                            android:text="@string/unit_mg_sup"
                             android:textColor="@color/white"
                             android:textSize="21sp"
                             android:textStyle="bold"
@@ -337,7 +352,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
-                            android:text="@string/unit_sup"
+                            android:text="@string/unit_mg_sup"
                             android:textColor="@color/white"
                             android:textSize="21sp"
                             android:textStyle="bold"
@@ -431,7 +446,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
-                            android:text="@string/unit_sup"
+                            android:text="@string/unit_mg_sup"
                             android:textColor="@color/white"
                             android:textSize="21sp"
                             android:textStyle="bold"
@@ -634,7 +649,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

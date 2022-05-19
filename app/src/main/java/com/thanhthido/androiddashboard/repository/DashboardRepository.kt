@@ -4,10 +4,15 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.thanhthido.androiddashboard.data.remote.UrlsApi
+import com.thanhthido.androiddashboard.di.dispatchers.DispatcherProvider
+import com.thanhthido.androiddashboard.utils.NetworkResult
+import com.thanhthido.androiddashboard.utils.NetworkStatus
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DashboardRepository @Inject constructor(
-    private val api: UrlsApi
+    private val api: UrlsApi,
+    private val dispatchers: DispatcherProvider
 ) {
 
     companion object {
@@ -28,5 +33,14 @@ class DashboardRepository @Inject constructor(
             )
         }
     ).liveData
+
+    suspend fun getLatestData() = withContext(dispatchers.io) {
+        try {
+            val result = api.getLatestData()
+            NetworkResult.success(result)
+        } catch (e: Exception) {
+            NetworkResult.error(e.message, null)
+        }
+    }
 
 }

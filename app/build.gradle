@@ -118,4 +118,11 @@ dependencies {
     implementation "androidx.paging:paging-common-ktx:3.0.0-alpha05"
     implementation "androidx.paging:paging-runtime:3.0.0-alpha05"
 
+    // Google service location
+    implementation "com.google.android.gms:play-services-location:19.0.1"
+
+    implementation 'com.github.EspressifApp:lib-esptouch-android:1.0.0'
+    implementation 'com.github.EspressifApp:lib-esptouch-v2-android:2.1.0'
+
+
 }
