@@ -17,5 +17,19 @@
     <fragment
         android:id="@+id/wifiFragment"
         android:name="com.thanhthido.androiddashboard.pages.wifi_page.WifiFragment"
-        android:label="WifiFragment" />
+        android:label="WifiFragment" >
+        <action
+            android:id="@+id/action_wifi_to_wifi_connect"
+            app:destination="@id/wifiConnectFragment"
+            app:popUpTo="@id/wifiConnectFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/wifiConnectFragment"
+        android:name="com.thanhthido.androiddashboard.pages.connect_wifi_page.WifiConnectFragment"
+        android:label="WifiConnectFragment" >
+        <argument
+            android:name="wifiDescription"
+            app:argType="com.thanhthido.androiddashboard.data.arguments.WifiConnect" />
+    </fragment>
 </navigation>

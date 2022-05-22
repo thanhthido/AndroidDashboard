@@ -8,7 +8,6 @@ import com.thanhthido.androiddashboard.data.remote.response.LatestSensorData
 import com.thanhthido.androiddashboard.repository.DashboardRepository
 import com.thanhthido.androiddashboard.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,11 +20,9 @@ class HomeViewModel @Inject constructor(
     val latestData: LiveData<NetworkResult<LatestSensorData>> get() = _latestData
 
     fun getLatestData() = viewModelScope.launch {
-        _latestData.value = NetworkResult.loading(null)
-        val data = async {
-            repository.getLatestData()
-        }
-        _latestData.value = data.await()
+        _latestData.postValue(NetworkResult.loading(null))
+        val data = repository.getLatestData()
+        _latestData.postValue(data)
     }
 
 }

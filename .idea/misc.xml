@@ -10,6 +10,7 @@
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_green_blue.xml" value="0.231" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_mojito.xml" value="0.179" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_normal_error.xml" value="0.161" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_rounded_dialog.xml" value="0.176" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/bg_sweet_morning.xml" value="0.2" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_close.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_cloud.xml" value="0.2325" />
@@ -24,7 +25,10 @@
         <entry key="..\:/AndroidDashboard/app/src/main/res/drawable/ic_wifi_black.xml" value="0.2325" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/bottom_sheet_filter.xml" value="0.264" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/dialog_2ghz.xml" value="0.2" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/dialog_error_5ghz.xml" value="0.264" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/dropdown_item.xml" value="0.264" />
+        <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_connect_wifi.xml" value="0.18205128205128204" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_history.xml" value="0.2" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/AndroidDashboard/app/src/main/res/layout/fragment_wifi.xml" value="0.264" />

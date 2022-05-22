@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidDashboard</string>
+    <string name="app_name">Dashboard</string>
     <string name="bottom_home">Trang chính</string>
     <string name="bottom_history">Lịch sử</string>
     <string name="bottom_wifi">WIFI</string>

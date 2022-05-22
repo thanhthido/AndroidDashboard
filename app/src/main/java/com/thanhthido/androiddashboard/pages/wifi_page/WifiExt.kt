@@ -26,6 +26,17 @@ fun WifiFragment.hideErrorContainer() {
     binding.containerErrorLocation.visibility = View.GONE
 }
 
+fun WifiFragment.showEmptyWifiScan(msg: String) {
+    binding.containerWifiConnecting.visibility = View.VISIBLE
+    binding.tvMsgWifi.text = msg
+    binding.rvListWifi.visibility = View.GONE
+}
+
+fun WifiFragment.hideEmptyWifiScan() {
+    binding.containerWifiConnecting.visibility = View.GONE
+    binding.rvListWifi.visibility = View.VISIBLE
+}
+
 fun WifiFragment.enableLocation(
     wifiManager: WifiManager,
     locationRequest: LocationRequest,

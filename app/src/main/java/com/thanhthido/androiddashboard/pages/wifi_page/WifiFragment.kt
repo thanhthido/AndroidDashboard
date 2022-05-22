@@ -1,24 +1,29 @@
 package com.thanhthido.androiddashboard.pages.wifi_page
 
 import android.app.Activity.RESULT_OK
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.app.Dialog
+import android.content.*
 import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
+import com.thanhthido.androiddashboard.R
 import com.thanhthido.androiddashboard.adapters.WifiAdapter
 import com.thanhthido.androiddashboard.base.BaseFragment
+import com.thanhthido.androiddashboard.data.arguments.WifiConnect
 import com.thanhthido.androiddashboard.databinding.FragmentWifiBinding
 import com.thanhthido.androiddashboard.events.WifiAdapterClick
+import com.thanhthido.androiddashboard.utils.afterTextChanged
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -50,21 +55,18 @@ class WifiFragment : BaseFragment<FragmentWifiBinding>() {
         WifiAdapter()
     }
 
-    private val wifiListener = object : BroadcastReceiver() {
+    private val wifiScanListener = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val isScanAvailable = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
-            if (isScanAvailable) {
-                binding.containerWifiConnecting.visibility = View.GONE
-                binding.rvListWifi.visibility = View.VISIBLE
+            if (isScanAvailable && binding.switchScan.isChecked) {
+                hideEmptyWifiScan()
                 val listOfWifiVisible = wifiManager.scanResults.filter {
                     it.SSID.isNotEmpty()
                 }
                 wifiAdapter.setData(listOfWifiVisible.distinct())
-            } else {
-                binding.containerWifiConnecting.visibility = View.VISIBLE
-                binding.tvMsgWifi.text = "Không có mạng Wi-Fi khả dụng"
-                binding.rvListWifi.visibility = View.GONE
+                return
             }
+            showEmptyWifiScan("Không có mạng Wi-Fi khả dụng")
         }
     }
 
@@ -99,6 +101,54 @@ class WifiFragment : BaseFragment<FragmentWifiBinding>() {
             }
         }
 
+    private val error5GHzDialog by lazy {
+        Dialog(requireContext()).also { dialog ->
+            dialog.apply {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setCanceledOnTouchOutside(true)
+                setContentView(R.layout.dialog_error_5ghz)
+                window?.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+        }
+    }
+
+    private val buttonCancelDialog by lazy {
+        error5GHzDialog.findViewById<Button>(R.id.btn_cancel_popup_5ghz)
+    }
+
+    private val dialogConnectWifi by lazy {
+        Dialog(requireContext()).also { dialog ->
+            dialog.apply {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setCanceledOnTouchOutside(true)
+                setContentView(R.layout.dialog_2ghz)
+                window?.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+        }
+    }
+
+    private val ssidTitleDialog by lazy {
+        dialogConnectWifi.findViewById<TextView>(R.id.tv_wifi_ssid)
+    }
+
+
+    private val edtPasswordWifi by lazy {
+        dialogConnectWifi.findViewById<EditText>(R.id.edt_pass_wifi)
+    }
+
+    private val buttonConnectWifi by lazy {
+        dialogConnectWifi.findViewById<Button>(R.id.btn_connect_wifi)
+    }
+
+    private var wifiSSID = ""
+    private var wifiBSSID = ""
+
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -116,20 +166,39 @@ class WifiFragment : BaseFragment<FragmentWifiBinding>() {
     override fun initEvents() {
         binding.switchScan.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                binding.containerWifiConnecting.visibility = View.VISIBLE
-                binding.rvListWifi.visibility = View.GONE
-                binding.tvMsgWifi.text = "Không có mạng Wi-Fi khả dụng"
+                showEmptyWifiScan("Không có mạng Wi-Fi khả dụng")
                 wifiManager.startScan()
-            } else {
-                binding.containerWifiConnecting.visibility = View.VISIBLE
-                binding.rvListWifi.visibility = View.GONE
-                binding.tvMsgWifi.text = "Wi-Fi tắt"
+                return@setOnCheckedChangeListener
             }
+            showEmptyWifiScan("Wi-Fi tắt")
         }
 
         binding.tvContinueLocation.setOnClickListener {
             enableLocation(wifiManager, locationRequest, checkLocationResult, locationManager)
         }
+
+        buttonCancelDialog.setOnClickListener {
+            error5GHzDialog.dismiss()
+        }
+
+        edtPasswordWifi.afterTextChanged { pass ->
+            buttonConnectWifi.isEnabled = pass.length >= 8
+        }
+
+        buttonConnectWifi.setOnClickListener {
+            val password = edtPasswordWifi.text.toString()
+            if (TextUtils.isEmpty(password)) {
+                return@setOnClickListener
+            }
+
+            dialogConnectWifi.dismiss()
+            val action = WifiFragmentDirections.actionWifiToWifiConnect(
+                WifiConnect(this.wifiSSID, this.wifiBSSID, password)
+            )
+            findNavController().navigate(action)
+        }
+
+        dialogConnectWifi.setOnDismissListener { edtPasswordWifi.setText("") }
     }
 
     override fun onStart() {
@@ -138,7 +207,7 @@ class WifiFragment : BaseFragment<FragmentWifiBinding>() {
             EventBus.getDefault().register(this)
         }
         requireContext().apply {
-            registerReceiver(wifiListener, wifiIntentFilter)
+            registerReceiver(wifiScanListener, wifiIntentFilter)
             registerReceiver(locationListener, locationIntentFilter)
         }
     }
@@ -148,18 +217,23 @@ class WifiFragment : BaseFragment<FragmentWifiBinding>() {
         EventBus.getDefault().unregister(this)
 
         requireContext().apply {
-            unregisterReceiver(wifiListener)
+            unregisterReceiver(wifiScanListener)
             unregisterReceiver(locationListener)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onWifiItemClick(wifiAdapterClick: WifiAdapterClick) {
-        Toast.makeText(
-            requireContext(),
-            "${wifiAdapterClick.wifi.SSID} - isWifi5g: ${wifiAdapterClick.is5g}",
-            Toast.LENGTH_SHORT
-        ).show()
+        val (wifi, is5g) = wifiAdapterClick
+        if (is5g) {
+            error5GHzDialog.show()
+            return
+        }
+
+        this.wifiSSID = wifi.SSID
+        this.wifiBSSID = wifi.BSSID
+        ssidTitleDialog.text = wifi.SSID
+        dialogConnectWifi.show()
     }
 
     private fun initRecyclerView() {
