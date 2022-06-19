@@ -11,10 +11,11 @@ fun HomeFragment.subscribeLatestData(viewModel: HomeViewModel) {
     viewModel.latestData.observe(viewLifecycleOwner) { result ->
         when (result.networkStatus) {
             NetworkStatus.SUCCESS -> {
+                binding.swipeRefreshHome.isRefreshing = false
                 result.data?.let { latestData ->
                     val date = Date(latestData.time * 1000)
                     val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val timeFormatter = SimpleDateFormat("HH:mm:ss aa", Locale.getDefault())
+                    val timeFormatter = SimpleDateFormat("hh:mm:ss aa", Locale.getDefault())
                     binding.tvSubDate.text =
                         "${timeFormatter.format(date)}\n${dateFormatter.format(date)}"
                     binding.tvTempValue.text = "${latestData.tempValue} ℃" // 1
@@ -28,6 +29,7 @@ fun HomeFragment.subscribeLatestData(viewModel: HomeViewModel) {
                 }
             }
             NetworkStatus.ERROR -> {
+                binding.swipeRefreshHome.isRefreshing = false
                 result.message?.let {
                     Timber.e(it)
                 }

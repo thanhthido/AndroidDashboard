@@ -77,6 +77,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.getLatestData()
     }
 
-    override fun initEvents() = Unit
+    override fun initEvents() {
+        binding.swipeRefreshHome.setOnRefreshListener {
+            binding.swipeRefreshHome.isRefreshing = true
+            viewModel.getLatestData()
+        }
+    }
 
 }

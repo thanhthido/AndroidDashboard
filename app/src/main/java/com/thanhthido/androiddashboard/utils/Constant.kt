@@ -2,7 +2,7 @@ package com.thanhthido.androiddashboard.utils
 
 object Constant {
 
-    const val BASE_URL = "http://192.168.2.131:8001"
+    const val BASE_URL = "https://kltn-dashboard.online"
     const val PATH_GET_ALL_SENSOR_DATA = "/sensorsData"
     const val PATH_GET_SENSOR_DATA_BASED_ON_TYPE = "/sensorsData/data"
     const val PATH_GET_LATEST_DATA = "/sensorsData/data/latest"

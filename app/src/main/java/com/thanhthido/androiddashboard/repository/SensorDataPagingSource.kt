@@ -30,7 +30,7 @@ class SensorDataPagingSource(
             } else {
                 api.getSensorDataBasedOnType(type, position, params.loadSize, event)
             }
-            val listOfData = response.sensorDataList ?: listOf()
+            val listOfData = response.sensorDataList
             val nextKey = if (listOfData.isEmpty()) {
                 null
             } else {
